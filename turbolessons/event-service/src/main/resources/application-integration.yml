@@ -1,0 +1,55 @@
+spring:
+  application:
+    name: event-service
+  datasource:
+    url: jdbc:mysql://lessondb:3306/eventplt
+    username: ${LESSONDB_USERNAME}
+    password: ${LESSONDB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+  cloud:
+    config:
+      enabled: false
+      fail-fast: false
+    gateway:
+      enabled: false
+      redis:
+        enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: none
+    enabled-by-default: false
+  metrics:
+    export:
+      enabled: false
+    enable:
+      all: false
+      jvm: false
+      system: false
+      process: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://service-registry:8761/eureka/
+server:
+  port: 5001
+okta:
+  oauth2:
+    issuer: ${OKTA_ISSUER}
+    client-secret: ${OKTA_CLIENT_SECRET}
+    client-id: ${OKTA_CLIENT_ID}
+
+# Disable security for integration tests
+spring.autoconfigure.exclude:
+  - org.springframework.boot.actuate.autoconfigure.metrics.MetricsAutoConfiguration
+#  - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+#  - com.okta.spring.boot.oauth.OktaOAuth2AutoConfiguration

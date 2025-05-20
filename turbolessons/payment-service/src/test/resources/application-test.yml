@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: payment-service
+  cloud:
+    gateway:
+      enabled: false
+      redis:
+        enabled: false
+    discovery:
+      enabled: false
+    config:
+      enabled: false
+      fail-fast: false # Don't fail if config server is not available
+      import: optional:configserver:http://config-service:9999/ # Make config server optional
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OKTA_ISSUER:https://dev-78958050.okta.com/oauth2/default}
+          jwk-set-uri: ${OKTA_ISSUER:https://dev-78958050.okta.com/oauth2/default}/v1/keys
+      client:
+        provider:
+          okta:
+            issuer-uri: ${OKTA_ISSUER:https://dev-78958050.okta.com/oauth2/default}
+            token-uri: ${OKTA_ISSUER:https://dev-78958050.okta.com/oauth2/default}/v1/token
+        registration:
+          okta:
+            authorization-grant-type: client_credentials
+            client-id: ${OKTA_API_SERVICES_ID}
+            client-secret: ${OKTA_API_SERVICES_SECRET}
+            scope: stripe_client
+eureka:
+  client:
+    enabled: false
+okta:
+  oauth2:
+    issuer: ${OKTA_ISSUER}
+    client-id: ${OKTA_CLIENT_ID}
+    client-secret: ${OKTA_CLIENT_SECRET}
+STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}

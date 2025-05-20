@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: video-service
+  cloud:
+    gateway:
+      enabled: false
+      redis:
+        enabled: false
+    config:
+      enabled: false
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://service-registry:8761/eureka/
+okta:
+  oauth2:
+    issuer: ${OKTA_ISSUER}
+    client-secret: ${OKTA_CLIENT_SECRET}
+    client-id: ${OKTA_CLIENT_ID}
+google:
+  bucket:
+    name: ${bucketName}
+  credentials:
+    path: ${credentialsPath}
+  project:
+    id: ${projectId}

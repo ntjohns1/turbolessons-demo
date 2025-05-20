@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: message-service
+  cloud:
+    gateway:
+      enabled: false
+      redis:
+        enabled: false
+    config:
+      enabled: false
+  data:
+    mongodb:
+      uri: mongodb://root:example@messagedb:27017/lsa_message_plt?authSource=admin
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://service-registry:8761/eureka/
+okta:
+  oauth2:
+    issuer: ${OKTA_ISSUER}
+    client-secret: ${OKTA_CLIENT_SECRET}
+    client-id: ${OKTA_CLIENT_ID}

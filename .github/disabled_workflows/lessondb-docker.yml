@@ -1,0 +1,41 @@
+name: lessondb-docker
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'turbolessons/lessondb/**'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3.6.0
+
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2
+
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push lessondb
+        uses: docker/build-push-action@v4
+        with:
+          context: turbolessons/lessondb
+          push: true
+          tags: noslenj/lessondb:latest
+    
+      - name: Trigger Jenkins Job
+        uses: appleboy/jenkins-action@master
+        with:
+          url: "https://mostly-certain-primate.ngrok-free.app/"
+          user: "noslen"
+          token: ${{ secrets.JENKINS_TOKEN }}
+          job: "lessondb"

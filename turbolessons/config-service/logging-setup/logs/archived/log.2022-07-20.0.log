@@ -1,0 +1,99 @@
+2022-07-20 03:27:31 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter -
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call a method that does not exist. The attempt was made from the following location:
+
+    org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitializationDetector.detect(AnnotationDependsOnDatabaseInitializationDetector.java:36)
+
+The following method did not exist:
+
+    'java.lang.annotation.Annotation org.springframework.beans.factory.config.ConfigurableListableBeanFactory.findAnnotationOnBean(java.lang.String, java.lang.Class, boolean)'
+
+The calling method's class, org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitializationDetector, was loaded from the following location:
+
+    jar:file:/Users/nelsonjohns/.m2/repository/org/springframework/boot/spring-boot/2.7.1/spring-boot-2.7.1.jar!/org/springframework/boot/sql/init/dependency/AnnotationDependsOnDatabaseInitializationDetector.class
+
+The called method's class, org.springframework.beans.factory.config.ConfigurableListableBeanFactory, is available from the following locations:
+
+    jar:file:/Users/nelsonjohns/.m2/repository/org/springframework/spring-beans/5.3.13/spring-beans-5.3.13.jar!/org/springframework/beans/factory/config/ConfigurableListableBeanFactory.class
+
+The called method's class hierarchy was loaded from the following locations:
+
+    org.springframework.beans.factory.config.ConfigurableListableBeanFactory: file:/Users/nelsonjohns/.m2/repository/org/springframework/spring-beans/5.3.13/spring-beans-5.3.13.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains compatible versions of the classes org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitializationDetector and org.springframework.beans.factory.config.ConfigurableListableBeanFactory
+
+2022-07-20 03:28:07 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter -
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call a method that does not exist. The attempt was made from the following location:
+
+    org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitializationDetector.detect(AnnotationDependsOnDatabaseInitializationDetector.java:36)
+
+The following method did not exist:
+
+    'java.lang.annotation.Annotation org.springframework.beans.factory.config.ConfigurableListableBeanFactory.findAnnotationOnBean(java.lang.String, java.lang.Class, boolean)'
+
+The calling method's class, org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitializationDetector, was loaded from the following location:
+
+    jar:file:/Users/nelsonjohns/.m2/repository/org/springframework/boot/spring-boot/2.7.1/spring-boot-2.7.1.jar!/org/springframework/boot/sql/init/dependency/AnnotationDependsOnDatabaseInitializationDetector.class
+
+The called method's class, org.springframework.beans.factory.config.ConfigurableListableBeanFactory, is available from the following locations:
+
+    jar:file:/Users/nelsonjohns/.m2/repository/org/springframework/spring-beans/5.3.13/spring-beans-5.3.13.jar!/org/springframework/beans/factory/config/ConfigurableListableBeanFactory.class
+
+The called method's class hierarchy was loaded from the following locations:
+
+    org.springframework.beans.factory.config.ConfigurableListableBeanFactory: file:/Users/nelsonjohns/.m2/repository/org/springframework/spring-beans/5.3.13/spring-beans-5.3.13.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains compatible versions of the classes org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitializationDetector and org.springframework.beans.factory.config.ConfigurableListableBeanFactory
+
+2022-07-20 03:36:46 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter -
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+An attempt was made to call a method that does not exist. The attempt was made from the following location:
+
+    org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitializationDetector.detect(AnnotationDependsOnDatabaseInitializationDetector.java:36)
+
+The following method did not exist:
+
+    'java.lang.annotation.Annotation org.springframework.beans.factory.config.ConfigurableListableBeanFactory.findAnnotationOnBean(java.lang.String, java.lang.Class, boolean)'
+
+The calling method's class, org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitializationDetector, was loaded from the following location:
+
+    jar:file:/Users/nelsonjohns/.m2/repository/org/springframework/boot/spring-boot/2.7.1/spring-boot-2.7.1.jar!/org/springframework/boot/sql/init/dependency/AnnotationDependsOnDatabaseInitializationDetector.class
+
+The called method's class, org.springframework.beans.factory.config.ConfigurableListableBeanFactory, is available from the following locations:
+
+    jar:file:/Users/nelsonjohns/.m2/repository/org/springframework/spring-beans/5.3.13/spring-beans-5.3.13.jar!/org/springframework/beans/factory/config/ConfigurableListableBeanFactory.class
+
+The called method's class hierarchy was loaded from the following locations:
+
+    org.springframework.beans.factory.config.ConfigurableListableBeanFactory: file:/Users/nelsonjohns/.m2/repository/org/springframework/spring-beans/5.3.13/spring-beans-5.3.13.jar
+
+
+Action:
+
+Correct the classpath of your application so that it contains compatible versions of the classes org.springframework.boot.sql.init.dependency.AnnotationDependsOnDatabaseInitializationDetector and org.springframework.beans.factory.config.ConfigurableListableBeanFactory
+

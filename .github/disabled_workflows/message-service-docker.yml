@@ -1,0 +1,54 @@
+name: message-service-docker
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'turbolessons/message-service/**'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Checkout code
+        uses: actions/checkout@v3.6.0
+
+      - name: Run Maven Tests
+        working-directory: turbolessons/message-service
+        run: |
+          mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
+          -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \
+          -DOKTA_ISSUER=${{ secrets.OKTA_ISSUER }}
+
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push message-service
+        uses: docker/build-push-action@v4
+        with:
+          context: turbolessons/message-service
+          push: true
+          tags: noslenj/message-service:latest
+
+      - name: Trigger Jenkins Job
+        uses: appleboy/jenkins-action@master
+        with:
+          url: "https://mostly-certain-primate.ngrok-free.app/"
+          user: "noslen"
+          token: ${{ secrets.JENKINS_TOKEN }}
+          job: "message_service"

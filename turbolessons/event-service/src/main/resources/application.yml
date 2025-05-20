@@ -1,0 +1,13 @@
+server:
+  port: 5001
+spring:
+  application:
+    name: event-service
+  config:
+    import: optional:configserver:http://config-service:9999/
+  cloud:
+    config:
+      enabled: true
+      fail-fast: false
+      username: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}

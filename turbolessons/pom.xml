@@ -1,0 +1,29 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.turbolessons</groupId>
+    <artifactId>turbolessons_cloud_service</artifactId>
+    <version>1.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>turbolessons_cloud_service</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>config-service</module>
+        <module>service-registry</module>
+        <module>event-service</module>
+        <module>email-service</module>
+        <module>api-gateway</module>
+        <module>message-service</module>
+        <module>video-service</module>
+        <module>payment-service</module>
+        <module>api-tests</module>
+    </modules>
+
+</project>

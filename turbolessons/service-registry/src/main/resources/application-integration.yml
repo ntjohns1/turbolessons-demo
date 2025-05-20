@@ -1,0 +1,34 @@
+server:
+  port: 8761
+#  ssl:
+#    keyAlias: keystore
+#    enabled: true
+#    keyStore: ${KEY_STORE_PATH}
+#    trustStore: ${TRUST_STORE_PATH}
+#    keyStoreType: PKCS12
+#    keyStorePassword: ${KEY_STORE_PASSWORD}
+#    trustStorePassword: ${TRUST_STORE_PASSWORD}
+#    keyPassword: ${KEY_PASSWORD}
+spring:
+  application:
+    name: service-registry
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+eureka:
+  instance:
+    hostname: service-registry
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    service-url:
+      defaultZone: http://service-registry:8761/eureka/

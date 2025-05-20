@@ -1,0 +1,33 @@
+encrypt:
+  keyStore:
+    location: file:/config/config.p12
+    password: ${KEY_STORE_PASSWORD}
+    alias: config
+    secret: ${KEY_PASSWORD}
+    type: PKCS12
+server:
+  port: 9999
+spring:
+  application:
+    name: config-server
+  security:
+    user:
+      name: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}
+  cloud:
+    config:
+      discovery:
+        enabled: true
+      server:
+        bootstrap: true
+        git:
+          default-label: main
+          uri: https://github.com/ntjohns1/turbolessons-config.git
+  management:
+    security:
+      enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

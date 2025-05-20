@@ -1,0 +1,45 @@
+HELP.md
+turbolessons/payment-service/target
+target/
+.idea/workspace.xml
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/`
+**/api-tests/lessondb_data
+**/api-tests/gcs
+**/api-tests/init.sql
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+*.idea
+*.iws
+*.iml
+*.ipr
+*.env
+videoservice.env
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+.DS_Store
+
+/src/main/resources/config/
+/src/main/resources/keystore.p12
+/src/main/resources/truststore.p12

@@ -1,0 +1,11 @@
+server:
+  port: 5010
+spring:
+  application:
+    name: payment-service
+  cloud:
+    config:
+      username: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}
+  config:
+    import: optional:configserver:http://config-service:9999/
