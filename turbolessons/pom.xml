@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.turbolessons</groupId>
-    <artifactId>turbolessons_cloud_service</artifactId>
+    <artifactId>turbolessons_demo</artifactId>
     <version>1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>turbolessons_cloud_service</name>
+    <name>turbolessons_demo</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -18,12 +18,10 @@
         <module>config-service</module>
         <module>service-registry</module>
         <module>event-service</module>
-        <module>email-service</module>
         <module>api-gateway</module>
         <module>message-service</module>
         <module>video-service</module>
         <module>payment-service</module>
-        <module>api-tests</module>
     </modules>
 
 </project>

@@ -1,21 +1,21 @@
 networks:
-  turbolessons_cloud_service_net:
-  email-service_net:
-  event-service_net:
-  message-service_net:
+  demo_turbolessons_net:
+  demo-email-service_net:
+  demo-event-service_net:
+  demo-message-service_net:
 services:
   config-service:
-    image: noslenj/config-service:latest
-    container_name: config-service
+    image: noslenj/demo-config-service:latest
+    container_name: demo-config-service
     env_file:
       - ./root.env
     volumes: 
       - ./keystores/config.p12:/config/config.p12
-      - config_keystore:/config
+      - demo-config_keystore:/config
     ports:
       - "9999:9999"
     networks:
-      - turbolessons_cloud_service_net
+      - demo_turbolessons_net
     healthcheck:
       test: ["CMD", "curl", "-f", "${CONFIG_ACTUATOR_URI}"]
       interval: 10s
@@ -24,16 +24,16 @@ services:
       start_period: 20s
 
   service-registry:
-    image: noslenj/service-registry:latest
-    container_name: service-registry
+    image: noslenj/demo-service-registry:latest
+    container_name: demo-service-registry
     env_file:
       - ./root.env
     ports:
       - "8761:8761"
     networks:
-      - turbolessons_cloud_service_net
+      - demo_turbolessons_net
     depends_on:
-      config-service:
+      demo-config-service:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
@@ -43,111 +43,81 @@ services:
       start_period: 20s
 
   admin-service:
-    image: noslenj/admin-service:latest
-    container_name: admin-service
+    image: noslenj/demo-admin-service:latest
+    container_name: demo-admin-service
     env_file:
       - ./root.env
     ports:
       - "5002:5002"
     networks:
-      - turbolessons_cloud_service_net
+      - demo_turbolessons_net
     depends_on:
-      service-registry:
+      demo-service-registry:
         condition: service_healthy
-
-  email-service:
-    image: noslenj/email-service:latest
-    container_name: email-service
-    env_file:
-      - ./root.env
-    volumes:
-      - emaildb_data:/data/db
-      - ./template-thymeleaf.html:/app/mail-templates
-    ports:
-      - "5003:5003"
-    networks:
-      - turbolessons_cloud_service_net
-      - email-service_net
-    depends_on:
-      emaildb:
-        condition: service_started
-      service-registry:
-        condition: service_healthy
-
-  emaildb:
-    image: mongo:latest
-    container_name: emaildb
-    env_file:
-      - ./root.env
-    ports:
-      - "5053:27017"
-    networks:
-      - turbolessons_cloud_service_net
-      - email-service_net
 
   event-service:
-    image: noslenj/event-service:latest
-    container_name: event-service
+    image: noslenj/demo-event-service:latest
+    container_name: demo-event-service
     env_file:
       - ./root.env
     volumes:
-      - lessondb_data:/var/lib/mysql
+      - demo-lessondb_data:/var/lib/mysql
     ports:
       - "5001:5001"
     networks:
-      - turbolessons_cloud_service_net
-      - event-service_net
+      - demo_turbolessons_net
+      - demo-event-service_net
     depends_on:
-      service-registry:
+      demo-service-registry:
         condition: service_healthy
 
   lessondb:
     image: noslenj/lessondb:latest
-    container_name: lessondb
+    container_name: demo-lessondb
     env_file:
       - ./root.env
     ports:
       - "5051:3306"
     volumes:
       - ~/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - lessondb_data:/var/lib/mysql
+      - demo-lessondb_data:/var/lib/mysql
     networks:
-      - turbolessons_cloud_service_net
-      - event-service_net
+      - demo_turbolessons_net
+      - demo-event-service_net
 
   message-service:
-    image: noslenj/message-service:latest
-    container_name: message-service
+    image: noslenj/demo-message-service:latest
+    container_name: demo-message-service
     env_file:
       - ./root.env
     ports:
       - "5005:5005"
     networks:
-      - turbolessons_cloud_service_net
-      - message-service_net
+      - demo_turbolessons_net
+      - demo-message-service_net
     depends_on:
-      messagedb:
+      demo-messagedb:
         condition: service_started
-      service-registry:
+      demo-service-registry:
         condition: service_healthy
 
   messagedb:
     image: mongo:latest
-    container_name: messagedb
+    container_name: demo-messagedb
     restart: always
     env_file:
       - ./root.env
     volumes:
-      - messagedb_data:/data/db
+      - demo-messagedb_data:/data/db
     ports:
       - "5055:27017"
     networks:
-      - turbolessons_cloud_service_net
-      - message-service_net
+      - demo_turbolessons_net
+      - demo-message-service_net
 
   video-service:
-    image: noslenj/video-service:latest
-    container_name: video-service
+    image: noslenj/demo-video-service:latest
+    container_name: demo-video-service
     env_file:
       - ./root.env
     volumes:
@@ -155,40 +125,40 @@ services:
     ports:
       - "5004:5004"
     networks:
-      - turbolessons_cloud_service_net
+      - demo_turbolessons_net
     depends_on:
-      service-registry:
+      demo-service-registry:
         condition: service_healthy
 
   api-gateway:
-    image: noslenj/api-gateway:latest
-    container_name: api-gateway
+    image: noslenj/demo-api-gateway:latest
+    container_name: demo-api-gateway
     env_file:
       - ./root.env
     ports:
       - "8080:8080"
     networks:
-      - turbolessons_cloud_service_net
+      - demo_turbolessons_net
     depends_on:
-      service-registry:
+      demo-service-registry:
         condition: service_healthy
 
   payment-service:
-    image: noslenj/payment-service:latest
-    container_name: payment-service
+    image: noslenj/demo-payment-service:latest
+    container_name: demo-payment-service
     env_file:
       - ./root.env
     ports:
       - "5010:5010"
     networks:
-      - turbolessons_cloud_service_net
+      - demo_turbolessons_net
     depends_on:
-      service-registry:
+      demo-service-registry:
         condition: service_healthy
 
   turbolessons-frontend:
-    image: noslenj/turbolessons-frontend:latest
-    container_name: turbolessons-frontend
+    image: noslenj/demo-turbolessons-frontend:latest
+    container_name: demo-turbolessons-frontend
     env_file:
       - ./root.env
     ports:
@@ -201,12 +171,12 @@ services:
       - ./options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
       - ./ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
     networks:
-      - turbolessons_cloud_service_net
+      - demo_turbolessons_net
     depends_on:
-      service-registry:
+      demo-service-registry:
         condition: service_healthy
 volumes:
-  emaildb_data:
-  lessondb_data:
-  messagedb_data:
-  config_keystore:
+  demo-emaildb_data:
+  demo-lessondb_data:
+  demo-messagedb_data:
+  demo-config_keystore:
