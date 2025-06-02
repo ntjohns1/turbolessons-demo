@@ -11,11 +11,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 public class AdminServiceApplication {
 
-    @Value("${okta.client.token}")
-    private static String apiToken;
-
     public static void main(String[] args) {
-		System.out.println(apiToken);
         SpringApplication.run(AdminServiceApplication.class, args);
     }
 
