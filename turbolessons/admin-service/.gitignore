@@ -5,6 +5,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 okta.env
+*.env
 .DS_Store
 
 ### STS ###
