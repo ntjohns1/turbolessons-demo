@@ -1,12 +1,12 @@
 package com.turbolessons.adminservice.controller;
 
 import com.turbolessons.adminservice.dto.UserProfileDTO;
+import com.turbolessons.adminservice.model.User;
+import com.turbolessons.adminservice.model.UserProfile;
 import com.turbolessons.adminservice.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openapitools.client.model.User;
-import org.openapitools.client.model.UserProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;

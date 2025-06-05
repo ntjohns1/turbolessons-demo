@@ -1,0 +1,55 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: event-service
+          uri: lb://event-service
+          predicates:
+            - Path=/api/lessons/**
+          filters:
+            - TokenRelay=
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/api/users/**, /api/users
+          filters:
+            - TokenRelay=
+        - id: message-service
+          uri: lb://message-service
+          predicates:
+            - Path=/api/messages/**, /ws/messages/**
+          filters:
+            - TokenRelay=
+        - id: email-service
+          uri: lb://email-service
+          predicates:
+            - Path=/api/email/**
+          filters:
+            - TokenRelay=
+        - id: video-service
+          uri: lb://video-service
+          predicates:
+            - Path=/api/video/**, /api/video
+          filters:
+            - TokenRelay=
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payments/**, /api/payments
+          filters:
+            - TokenRelay=
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI}
+    healthcheck:
+      enabled: true
+okta:
+  oauth2:
+    issuer: ${OKTA_ISSUER}
+    client-secret: ${OKTA_CLIENT_SECRET}
+    client-id: ${OKTA_CLIENT_ID}

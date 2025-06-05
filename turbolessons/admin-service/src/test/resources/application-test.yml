@@ -15,13 +15,6 @@ spring:
 eureka:
   client:
     enabled: false
-okta:
-  oauth2:
-    issuer: ${OKTA_ISSUER}
-    client-secret: ${OKTA_CLIENT_SECRET}
-    client-id: ${OKTA_CLIENT_ID}
-  client:
-    token: ${ADMIN_SERVICE_API_TOKEN}
-    orgUrl: ${OKTA_ORG_URL}
+
 
 
