@@ -6,5 +6,8 @@
         {
             "path": "../../../../../../../turbolessons-demo-config"
         }
-    ]
+    ],
+    "settings": {
+        "java.configuration.updateBuildConfiguration": "interactive"
+    }
 }
