@@ -145,20 +145,20 @@ services:
       - turbolessons_cloud_service_net
       - message-service_net
 
-  video-service:
-    image: noslenj/video-service:latest
-    container_name: video-service
-    env_file:
-      - ./root.env
-    volumes:
-      - ./gcs:/gcs
-    ports:
-      - "5004:5004"
-    networks:
-      - turbolessons_cloud_service_net
-    depends_on:
-      service-registry:
-        condition: service_healthy
+  # video-service:
+  #   image: noslenj/video-service:latest
+  #   container_name: video-service
+  #   env_file:
+  #     - ./root.env
+  #   volumes:
+  #     - ./gcs:/gcs
+  #   ports:
+  #     - "5004:5004"
+  #   networks:
+  #     - turbolessons_cloud_service_net
+  #   depends_on:
+  #     service-registry:
+  #       condition: service_healthy
 
   api-gateway:
     image: noslenj/api-gateway:latest
