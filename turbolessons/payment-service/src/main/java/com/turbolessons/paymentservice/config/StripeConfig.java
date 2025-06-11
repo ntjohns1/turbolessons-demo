@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("!test") // Only load in non-test profiles
+@Profile({"!test", "!demo"}) // Only load in non-test and non-demo profiles
 public class StripeConfig {
 
     @Value("${STRIPE_SECRET_KEY}")
