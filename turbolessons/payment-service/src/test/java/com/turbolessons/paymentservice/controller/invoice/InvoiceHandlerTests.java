@@ -22,7 +22,6 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @WebFluxTest
 @Import({InvoiceHandlerImpl.class, InvoiceEndpointConfig.class})
@@ -125,7 +124,7 @@ public class InvoiceHandlerTests {
         InvoiceData invoice = createInvoiceData("inv_321");
         when(invoiceService.createInvoice(any())).thenReturn(Mono.just(invoice));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/invoice")
                 .body(Mono.just(invoice),
@@ -144,7 +143,7 @@ public class InvoiceHandlerTests {
         when(invoiceService.updateInvoice(anyString(),
                                           any())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/invoice/inv_654")
                 .body(Mono.just(invoice),
@@ -158,7 +157,7 @@ public class InvoiceHandlerTests {
     public void shouldHandleDeleteDraftInvoice() {
         when(invoiceService.deleteDraftInvoice(anyString())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .delete()
                 .uri("/api/payments/invoice/inv_123")
                 .exchange()
@@ -170,7 +169,7 @@ public class InvoiceHandlerTests {
     public void shouldHandleFinalizeInvoice() {
         when(invoiceService.finalizeInvoice(anyString())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/invoice/sub_456/finalize")
                 .exchange()
@@ -183,7 +182,7 @@ public class InvoiceHandlerTests {
         InvoiceData invoice = createInvoiceData("inv_999");
         when(invoiceService.payInvoice(anyString())).thenReturn(Mono.just(invoice));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/invoice/inv_999/pay")
                 .exchange()
@@ -195,7 +194,7 @@ public class InvoiceHandlerTests {
     public void shouldHandlePayInvoiceError() {
         when(invoiceService.payInvoice(anyString())).thenReturn(Mono.error(new RuntimeException("Payment failed")));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/invoice/inv_999/pay")
                 .exchange()
@@ -208,7 +207,7 @@ public class InvoiceHandlerTests {
         InvoiceData invoice = createInvoiceData("inv_888");
         when(invoiceService.voidInvoice(anyString())).thenReturn(Mono.just(invoice));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/invoice/inv_888/void")
                 .exchange()
@@ -220,7 +219,7 @@ public class InvoiceHandlerTests {
     public void shouldHandleVoidInvoiceError() {
         when(invoiceService.voidInvoice(anyString())).thenReturn(Mono.error(new RuntimeException("Void failed")));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/invoice/inv_888/void")
                 .exchange()
@@ -233,7 +232,7 @@ public class InvoiceHandlerTests {
         InvoiceData invoice = createInvoiceData("inv_777");
         when(invoiceService.markInvoiceUncollectible(anyString())).thenReturn(Mono.just(invoice));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/invoice/inv_777/mark_uncollectible")
                 .exchange()
@@ -245,7 +244,7 @@ public class InvoiceHandlerTests {
     public void shouldHandleMarkInvoiceUncollectibleError() {
         when(invoiceService.markInvoiceUncollectible(anyString())).thenReturn(Mono.error(new RuntimeException("Marking uncollectible failed")));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/invoice/inv_777/mark_uncollectible")
                 .exchange()

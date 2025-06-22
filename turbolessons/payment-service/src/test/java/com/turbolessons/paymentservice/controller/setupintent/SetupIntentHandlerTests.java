@@ -27,7 +27,6 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @Log4j2
 @WebFluxTest
@@ -104,7 +103,7 @@ public class SetupIntentHandlerTests {
         SetupIntentData dto = createMockSetupIntentDto("Test Description");
         when(setupIntentService.createSetupIntent(any(SetupIntentData.class)))
                      .thenReturn(Mono.just(setupIntent));
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/setupintent")
                 .body(Mono.just(dto), SetupIntentData.class)
@@ -129,7 +128,7 @@ public class SetupIntentHandlerTests {
 
         when(setupIntentService.confirmSetupIntent(anyString()))
                      .thenReturn(Mono.empty());
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/setupintent/confirm/si_123")
                 .exchange()
@@ -143,7 +142,7 @@ public class SetupIntentHandlerTests {
 
         when(setupIntentService.updateSetupIntent(anyString(),
                                                   any(SetupIntentData.class))).thenReturn(Mono.empty());
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/setupintent/si_123")
                 .exchange()
@@ -156,7 +155,7 @@ public class SetupIntentHandlerTests {
     @Test
     void shouldCancelSetupIntent() {
         when(setupIntentService.cancelSetupIntent(anyString())).thenReturn(Mono.empty());
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .delete()
                 .uri("/api/payments/setupintent/si_123")
                 .exchange()

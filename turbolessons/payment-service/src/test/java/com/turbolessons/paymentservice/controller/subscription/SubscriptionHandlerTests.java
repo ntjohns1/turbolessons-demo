@@ -26,7 +26,6 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @Log4j2
 @WebFluxTest
@@ -98,7 +97,7 @@ public class SubscriptionHandlerTests {
     void shouldHandleCreateSubscription() {
         SubscriptionData data = createSubscriptionDto();
         when(subscriptionService.createSubscription(any())).thenReturn(Mono.just(data));
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/subscription")
                 .body(Mono.just(data),
@@ -132,7 +131,7 @@ public class SubscriptionHandlerTests {
         when(subscriptionService.updateSubscription(anyString(),
                                                     any(SubscriptionData.class))).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/subscription/sub_123")
                 .body(Mono.just(updateData),
@@ -147,7 +146,7 @@ public class SubscriptionHandlerTests {
     void shouldHandleDeleteSubscription() {
         when(subscriptionService.cancelSubscription(anyString())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .delete()
                 .uri("/api/payments/subscription/cus_123")
                 .exchange()

@@ -27,7 +27,6 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 
 @Log4j2
@@ -148,7 +147,7 @@ public class PaymentIntentHandlerTests {
                                                            "pm_123");
         when(paymentIntentService.createPaymentIntent(any(PaymentIntentData.class)))
                 .thenReturn(Mono.just(paymentIntent));
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/paymentintent")
                 .body(Mono.just(dto),
@@ -183,7 +182,7 @@ public class PaymentIntentHandlerTests {
         when(paymentIntentService.updatePaymentIntent(anyString(), any(PaymentIntentData.class)))
                 .thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/paymentintent/pi_123")
                 .body(Mono.just(updateData), PaymentIntentData.class)
@@ -205,7 +204,7 @@ public class PaymentIntentHandlerTests {
 
         when(paymentIntentService.capturePaymentIntent(anyString())).thenReturn(Mono.just(paymentIntent));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/paymentintent/capture/pi_123")
                 .exchange()
@@ -219,7 +218,7 @@ public class PaymentIntentHandlerTests {
         when(paymentIntentService.cancelPaymentIntent(anyString()))
                 .thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .delete()
                 .uri("/api/payments/paymentintent/pi_123")
                 .exchange()

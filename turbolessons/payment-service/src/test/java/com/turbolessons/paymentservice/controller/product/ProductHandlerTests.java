@@ -27,7 +27,6 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @Log4j2
 @WebFluxTest
@@ -102,7 +101,7 @@ public class ProductHandlerTests {
                                                "Test Description");
         when(productService.createProduct(dto)).thenReturn(Mono.just(product));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/product")
                 .body(Mono.just(dto),
@@ -128,7 +127,7 @@ public class ProductHandlerTests {
         when(productService.updateProduct(anyString(),
                                           any(ProductData.class))).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/product/prod_123")
                 .body(Mono.just(dto),
@@ -143,7 +142,7 @@ public class ProductHandlerTests {
     void shouldHandleDeleteProduct() {
         when(productService.deleteProduct(anyString())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .delete()
                 .uri("/api/payments/product/prod_123")
                 .exchange()
