@@ -30,7 +30,6 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @Log4j2
 @WebFluxTest
@@ -95,7 +94,7 @@ public class MeterHandlerTests {
         MeterData meter = createMeterDto("mtr_123");
         when(meterService.createMeter(any(MeterData.class))).thenReturn(Mono.just(meter));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/meter")
                 .body(Mono.just(meter),
@@ -113,7 +112,7 @@ public class MeterHandlerTests {
         when(meterService.updateMeter(anyString(),
                                       any(MeterData.class))).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/meter/mtr_123")
                 .body(Mono.just(meter),
@@ -127,7 +126,7 @@ public class MeterHandlerTests {
     public void shouldHandleDeactivateMeter() {
         when(meterService.deactivateMeter(anyString())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/meter/mtr_123/deactivate")
                 .exchange()
@@ -139,7 +138,7 @@ public class MeterHandlerTests {
     public void shouldHandleReactivateMeter() {
         when(meterService.reactivateMeter(anyString())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/meter/mtr_123/reactivate")
                 .exchange()
@@ -152,7 +151,7 @@ public class MeterHandlerTests {
         MeterEventData meterEvent = createMeterEventDto();
         when(meterService.createMeterEvent(any(MeterEventData.class))).thenReturn(Mono.just(meterEvent));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/meter_event")
                 .body(Mono.just(meterEvent),

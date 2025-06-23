@@ -2,3 +2,6 @@
 *.idea
 .vscode/
 Turbolessons-Cloud-Service.code-workspace
+.env
+root.env
+keystores
