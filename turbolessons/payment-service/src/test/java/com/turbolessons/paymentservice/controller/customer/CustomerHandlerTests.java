@@ -29,7 +29,6 @@ import java.util.Map;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @Log4j2
 @WebFluxTest
@@ -117,7 +116,7 @@ public class CustomerHandlerTests {
         CustomerData data = createCustomerDto();
         when(customerService.createCustomer(any())).thenReturn(Mono.just(data));
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .post()
                 .uri("/api/payments/customer")
                 .body(Mono.just(data),
@@ -141,7 +140,7 @@ public class CustomerHandlerTests {
         when(customerService.updateCustomer(anyString(),
                                             any(CustomerData.class))).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/customer/cus_123")
                 .body(Mono.just(data),
@@ -155,7 +154,7 @@ public class CustomerHandlerTests {
     void shouldHandleDeleteCustomer() {
         when(customerService.deleteCustomer(anyString())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .delete()
                 .uri("/api/payments/customer/cus_123")
                 .exchange()

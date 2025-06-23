@@ -5,26 +5,25 @@ networks:
   message-service_net:
 services:
   config-service:
-    image: noslenj/config-service:latest
+    image: noslenj/config-service:demo
     container_name: config-service
     env_file:
       - ./root.env
     volumes: 
       - ./keystores/config.p12:/config/config.p12
-      - config_keystore:/config
     ports:
       - "9999:9999"
     networks:
       - turbolessons_cloud_service_net
     healthcheck:
-      test: ["CMD", "curl", "-f", "${CONFIG_ACTUATOR_URI}"]
+      test: ["CMD-SHELL", "curl -f $${CONFIG_ACTUATOR_URI}"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 20s
 
   service-registry:
-    image: noslenj/service-registry:latest
+    image: noslenj/service-registry:demo
     container_name: service-registry
     env_file:
       - ./root.env
@@ -43,7 +42,7 @@ services:
       start_period: 20s
 
   admin-service:
-    image: noslenj/admin-service:latest
+    image: noslenj/admin-service:demo
     container_name: admin-service
     env_file:
       - ./root.env
@@ -56,7 +55,7 @@ services:
         condition: service_healthy
 
   email-service:
-    image: noslenj/email-service:latest
+    image: noslenj/email-service:demo
     container_name: email-service
     env_file:
       - ./root.env
@@ -86,7 +85,7 @@ services:
       - email-service_net
 
   event-service:
-    image: noslenj/event-service:latest
+    image: noslenj/event-service:demo
     container_name: event-service
     env_file:
       - ./root.env
@@ -102,7 +101,7 @@ services:
         condition: service_healthy
 
   lessondb:
-    image: noslenj/lessondb:latest
+    image: noslenj/lessondb:demo
     container_name: lessondb
     env_file:
       - ./root.env
@@ -116,7 +115,7 @@ services:
       - event-service_net
 
   message-service:
-    image: noslenj/message-service:latest
+    image: noslenj/message-service:demo
     container_name: message-service
     env_file:
       - ./root.env
@@ -145,23 +144,23 @@ services:
       - turbolessons_cloud_service_net
       - message-service_net
 
-  video-service:
-    image: noslenj/video-service:latest
-    container_name: video-service
-    env_file:
-      - ./root.env
-    volumes:
-      - ./gcs:/gcs
-    ports:
-      - "5004:5004"
-    networks:
-      - turbolessons_cloud_service_net
-    depends_on:
-      service-registry:
-        condition: service_healthy
+  # video-service:
+  #   image: noslenj/video-service:demo
+  #   container_name: video-service
+  #   env_file:
+  #     - ./root.env
+  #   volumes:
+  #     - ./gcs:/gcs
+  #   ports:
+  #     - "5004:5004"
+  #   networks:
+  #     - turbolessons_cloud_service_net
+  #   depends_on:
+  #     service-registry:
+  #       condition: service_healthy
 
   api-gateway:
-    image: noslenj/api-gateway:latest
+    image: noslenj/api-gateway:demo
     container_name: api-gateway
     env_file:
       - ./root.env
@@ -174,7 +173,7 @@ services:
         condition: service_healthy
 
   payment-service:
-    image: noslenj/payment-service:latest
+    image: noslenj/payment-service:demo
     container_name: payment-service
     env_file:
       - ./root.env
@@ -186,25 +185,6 @@ services:
       service-registry:
         condition: service_healthy
 
-  turbolessons-frontend:
-    image: noslenj/turbolessons-frontend:latest
-    container_name: turbolessons-frontend
-    env_file:
-      - ./root.env
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./pem_files/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
-      - ./pem_files/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
-      - ./options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
-      - ./ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
-    networks:
-      - turbolessons_cloud_service_net
-    depends_on:
-      service-registry:
-        condition: service_healthy
 volumes:
   emaildb_data:
   lessondb_data:

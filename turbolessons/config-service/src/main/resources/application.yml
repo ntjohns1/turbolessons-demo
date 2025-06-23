@@ -22,7 +22,7 @@ spring:
         bootstrap: true
         git:
           default-label: main
-          uri: https://github.com/ntjohns1/turbolessons-config.git
+          uri: https://github.com/ntjohns1/turbolessons-demo-config
   management:
     security:
       enabled: false

@@ -25,7 +25,6 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @Log4j2
 @WebFluxTest
@@ -91,7 +90,7 @@ public class PaymentMethodHandlerTests {
 
         when(paymentMethodService.attachPaymentMethod(anyString(),anyString())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/paymentmethod/attach/pm_123/cus123")
                 .exchange()
@@ -104,7 +103,7 @@ public class PaymentMethodHandlerTests {
 
         when(paymentMethodService.detachPaymentMethod(anyString())).thenReturn(Mono.empty());
 
-        webTestClient.mutateWith(mockJwt())
+        webTestClient
                 .put()
                 .uri("/api/payments/paymentmethod/detach/pm_123")
                 .exchange()

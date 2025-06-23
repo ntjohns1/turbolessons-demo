@@ -1,0 +1,36 @@
+server:
+  port: 5010
+spring:
+  application:
+    name: payment-service
+  cloud:
+    config:
+      enabled: false
+      discovery:
+        enabled: false
+  config:
+    import: optional:configserver:
+  security:
+    oauth2:
+      client:
+        registration:
+          okta:
+            client-id: demo-client
+            client-secret: demo-secret
+            scope: openid
+            authorization-grant-type: client_credentials
+        provider:
+          okta:
+            token-uri: http://localhost:8080/oauth/token
+
+# Mock environment variables for demo
+CONFIG_USERNAME: demo
+CONFIG_PASSWORD: demo
+STRIPE_SECRET_KEY: sk_test_mock_12345678
+
+# Log level configuration
+logging:
+  level:
+    com.turbolessons: DEBUG
+    org.springframework.security: INFO
+    org.springframework.web: INFO
