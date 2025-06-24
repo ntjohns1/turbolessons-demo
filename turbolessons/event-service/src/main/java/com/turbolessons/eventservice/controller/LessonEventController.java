@@ -1,8 +1,15 @@
-package com.turbolessons.eventservice.controller;
+ package com.turbolessons.eventservice.controller;
 
 import com.turbolessons.eventservice.dto.BillingStatus;
 import com.turbolessons.eventservice.dto.LessonEvent;
 import com.turbolessons.eventservice.service.LessonEventService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +19,7 @@ import java.util.List;
 
 //@RefreshScope
 @RestController
+@Tag(name = "Lesson Events", description = "API for managing lesson events")
 public class LessonEventController {
     private final LessonEventService service;
 
@@ -19,16 +27,26 @@ public class LessonEventController {
         this.service = service;
     }
 
-    //Get All Lesson Events
+    @Operation(summary = "Get all lesson events", description = "Retrieves all lesson events from the system")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved all lessons",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = LessonEvent.class)))
+    })
     @PreAuthorize("hasAnyAuthority('SCOPE_email_client', 'SCOPE_stripe_client')")
     @GetMapping("/api/lessons")
     public List<LessonEvent> getAllLessons() {
 
         return service.findAllLessonEvents();
     }
-    //Get One Lesson Event
+    @Operation(summary = "Get lesson by ID", description = "Retrieves a specific lesson event by its ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully retrieved the lesson",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = LessonEvent.class))),
+        @ApiResponse(responseCode = "404", description = "Lesson not found")
+    })
     @GetMapping("/api/lessons/{id}")
-    public LessonEvent getLessonById(@PathVariable Integer id) {
+    public LessonEvent getLessonById(
+            @Parameter(description = "ID of the lesson to retrieve") @PathVariable Integer id) {
 
         return service.findLessonEvent(id);
     }
@@ -92,9 +110,15 @@ public class LessonEventController {
         service.updateLessonEventBillingStatus(id, status);
     }
     
-    //Create Lesson Event
+    @Operation(summary = "Create a new lesson event", description = "Creates a new lesson event in the system")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Successfully created the lesson",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = LessonEvent.class))),
+        @ApiResponse(responseCode = "400", description = "Invalid lesson data provided")
+    })
     @PostMapping("/api/lessons")
-    public LessonEvent createLesson(@RequestBody LessonEvent lesson) {
+    public LessonEvent createLesson(
+            @Parameter(description = "Lesson event to create", required = true) @RequestBody LessonEvent lesson) {
 
         service.saveLessonEvent(lesson);
         return lesson;

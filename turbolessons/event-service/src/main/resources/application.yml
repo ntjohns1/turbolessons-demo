@@ -11,3 +11,12 @@ spring:
       fail-fast: false
       username: ${CONFIG_USERNAME}
       password: ${CONFIG_PASSWORD}
+
+# OpenAPI Documentation Configuration
+springdoc:
+  api-docs:
+    path: /api/lessons/v3/api-docs
+  swagger-ui:
+    path: /api/lessons/swagger-ui.html
+    operationsSorter: method
+  packages-to-scan: com.turbolessons.eventservice.controller
